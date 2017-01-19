@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Евгений Закурдаев](https://up.htmlacademy.ru/javascript/8/user/25657).
-* Наставник: `Неизвестно`.
+* Наставник: [Олег Плотников](https://up.htmlacademy.ru/javascript/8/user/230042).
 
 ---
 
