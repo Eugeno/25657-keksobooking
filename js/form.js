@@ -11,9 +11,9 @@ var deactivatePins = function () {
 };
 
 for (var i = 0; i < pin.length; i++) {
-  pin[i].addEventListener('click', function () {
+  pin[i].addEventListener('click', function (e) {
     deactivatePins();
-    this.classList.add('pin--active');
+    e.currentTarget.classList.add('pin--active');
     dialog.style.display = 'block';
   });
 }
