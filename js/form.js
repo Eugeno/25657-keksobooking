@@ -1,27 +1,77 @@
 'use strict';
 
-var pin = document.querySelectorAll('.pin');
+var pinMap = document.querySelector('.tokyo__pin-map');
+var pin = pinMap.querySelectorAll('.pin');
 var dialog = document.querySelector('.dialog');
 var dialogClose = dialog.querySelector('.dialog__close');
+
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+
+dialog.setAttribute('role', 'dialog');
+dialog.setAttribute('tabindex', '0');
+
+dialogClose.setAttribute('role', 'button');
+dialogClose.setAttribute('aria-pressed', 'false');
+dialogClose.setAttribute('tabindex', '0');
 
 var deactivatePins = function () {
   for (var i = 0; i < pin.length; i++) {
     pin[i].classList.remove('pin--active');
+    pin[i].setAttribute('aria-pressed', 'false');
   }
 };
 
+var activateDialog = function (e) {
+  deactivatePins();
+  e.classList.add('pin--active');
+  e.setAttribute('aria-pressed', 'true');
+  dialog.style.display = 'block';
+  dialogClose.setAttribute('aria-pressed', 'false');
+  window.addEventListener('keydown', dialogKeydownHandler);
+};
+
+var deactivateDialog = function () {
+  deactivatePins();
+  dialog.style.display = 'none';
+  dialogClose.setAttribute('aria-pressed', 'true');
+  window.removeEventListener('keydown', dialogKeydownHandler);
+};
+
+var dialogKeydownHandler = function (evt) {
+  if (evt.keyCode === ESCAPE_KEY_CODE) {
+    deactivateDialog();
+  }
+};
+
+if (dialog.style.display !== 'none') {
+  window.addEventListener('keydown', dialogKeydownHandler)
+}
+
+var pinClickHandler = function (e) {
+  var clickedPin;
+  if (e.target.classList.contains('pin')) {
+    clickedPin = e.target;
+  } else {
+    clickedPin = e.target.parentNode;
+  }
+  activateDialog(clickedPin);
+};
+
+pinMap.addEventListener('click', pinClickHandler);
+
 for (var i = 0; i < pin.length; i++) {
-  pin[i].addEventListener('click', function (e) {
-    deactivatePins();
-    e.currentTarget.classList.add('pin--active');
-    dialog.style.display = 'block';
+  pin[i].setAttribute('role', 'button');
+  pin[i].setAttribute('tabindex', '0');
+
+  pin[i].addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY_CODE) {
+      activateDialog(evt.currentTarget);
+    }
   });
 }
 
-dialogClose.addEventListener('click', function () {
-  deactivatePins();
-  dialog.style.display = 'none';
-});
+dialogClose.addEventListener('click', deactivateDialog);
 
 var formTime = document.querySelector('#time');
 var formTimeout = document.querySelector('#timeout');
