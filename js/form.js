@@ -8,13 +8,6 @@ var dialogClose = dialog.querySelector('.dialog__close');
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
-dialog.setAttribute('role', 'dialog');
-dialog.setAttribute('tabindex', '0');
-
-dialogClose.setAttribute('role', 'button');
-dialogClose.setAttribute('aria-pressed', 'false');
-dialogClose.setAttribute('tabindex', '0');
-
 var deactivatePins = function () {
   for (var i = 0; i < pin.length; i++) {
     pin[i].classList.remove('pin--active');
