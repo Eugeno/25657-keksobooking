@@ -15,30 +15,42 @@ var deactivatePins = function () {
   }
 };
 
-var activateDialog = function (e) {
-  deactivatePins();
-  e.classList.add('pin--active');
-  e.setAttribute('aria-pressed', 'true');
+var activatePin = function (clickedPin) {
+  clickedPin.classList.add('pin--active');
+  clickedPin.setAttribute('aria-pressed', 'true');
+};
+
+var openDialog = function () {
   dialog.style.display = 'block';
   dialogClose.setAttribute('aria-pressed', 'false');
   window.addEventListener('keydown', dialogKeydownHandler);
 };
 
-var deactivateDialog = function () {
-  deactivatePins();
+var closeDialog = function () {
   dialog.style.display = 'none';
   dialogClose.setAttribute('aria-pressed', 'true');
   window.removeEventListener('keydown', dialogKeydownHandler);
 };
 
+var showLodgeInfo = function (clickedPin) {
+  deactivatePins();
+  activatePin(clickedPin);
+  openDialog();
+};
+
+var hideLodgeInfo = function () {
+  deactivatePins();
+  closeDialog();
+};
+
 var dialogKeydownHandler = function (evt) {
   if (evt.keyCode === ESCAPE_KEY_CODE) {
-    deactivateDialog();
+    hideLodgeInfo();
   }
 };
 
 if (dialog.style.display !== 'none') {
-  window.addEventListener('keydown', dialogKeydownHandler)
+  window.addEventListener('keydown', dialogKeydownHandler);
 }
 
 var pinClickHandler = function (e) {
@@ -48,23 +60,18 @@ var pinClickHandler = function (e) {
   } else {
     clickedPin = e.target.parentNode;
   }
-  activateDialog(clickedPin);
+  showLodgeInfo(clickedPin);
 };
 
 pinMap.addEventListener('click', pinClickHandler);
 
-for (var i = 0; i < pin.length; i++) {
-  pin[i].setAttribute('role', 'button');
-  pin[i].setAttribute('tabindex', '0');
+pinMap.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEY_CODE) {
+    showLodgeInfo(evt.currentTarget);
+  }
+});
 
-  pin[i].addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEY_CODE) {
-      activateDialog(evt.currentTarget);
-    }
-  });
-}
-
-dialogClose.addEventListener('click', deactivateDialog);
+dialogClose.addEventListener('click', hideLodgeInfo);
 
 var formTime = document.querySelector('#time');
 var formTimeout = document.querySelector('#timeout');
