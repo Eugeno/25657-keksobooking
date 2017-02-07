@@ -1,4 +1,6 @@
-window.initializePins = function(pinMap, pins, dialog, dialogClose) {
+'use strict';
+
+window.initializePins = function (pinMap, pins, dialog, dialogClose) {
 
   var deactivatePins = function () {
     for (var i = 0; i < pins.length; i++) {
