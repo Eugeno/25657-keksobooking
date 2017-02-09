@@ -25,4 +25,3 @@ var formRoomNumberValues = ['1', '2', '100'];
 var formCapacityValues = ['0', '3', '3'];
 window.synchronizeFields(formRoomNumber, formCapacity, formRoomNumberValues, formCapacityValues, 'value');
 window.synchronizeFields(formCapacity, formRoomNumber, formCapacityValues, formRoomNumberValues, 'value');
-
