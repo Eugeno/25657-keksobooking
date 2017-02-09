@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   window.initializePins = function (pinMap, pins, dialog, dialogClose) {
 
