@@ -1,5 +1,4 @@
 'use strict';
-
 var pinMap = document.querySelector('.tokyo__pin-map');
 var pins = pinMap.querySelectorAll('.pin');
 var dialog = document.querySelector('.dialog');
