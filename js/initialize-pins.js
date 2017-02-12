@@ -31,7 +31,7 @@
     var showLodgeInfo = function (clickedPin) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      openDialog(dialog, dialogClose, dialogKeydownHandler);
+      window.openDialog(dialog, dialogClose, dialogKeydownHandler);
     };
 
     var hideLodgeInfo = function () {
