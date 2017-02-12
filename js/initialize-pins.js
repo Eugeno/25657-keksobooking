@@ -13,11 +13,11 @@
       clickedPin.setAttribute('aria-pressed', 'true');
     };
 
-    /*var openDialog = function () {
+    /* var openDialog = function () {
       dialog.style.display = 'block';
       dialogClose.setAttribute('aria-pressed', 'false');
       window.addEventListener('keydown', dialogKeydownHandler);
-    };*/
+    }; */
 
     var closeDialog = function () {
       dialog.style.display = 'none';
@@ -31,7 +31,7 @@
     var showLodgeInfo = function (clickedPin) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      openDialog(dialog, dialogClose);
+      openDialog(dialog, dialogClose, dialogKeydownHandler);
     };
 
     var hideLodgeInfo = function () {
