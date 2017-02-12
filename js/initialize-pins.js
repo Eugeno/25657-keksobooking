@@ -1,7 +1,6 @@
 'use strict';
 (function () {
   window.initializePins = function (pinMap, pins, dialog, dialogClose) {
-
     var deactivatePins = function () {
       for (var i = 0; i < pins.length; i++) {
         pins[i].classList.remove('pin--active');
@@ -14,11 +13,11 @@
       clickedPin.setAttribute('aria-pressed', 'true');
     };
 
-    var openDialog = function () {
+    /*var openDialog = function () {
       dialog.style.display = 'block';
       dialogClose.setAttribute('aria-pressed', 'false');
       window.addEventListener('keydown', dialogKeydownHandler);
-    };
+    };*/
 
     var closeDialog = function () {
       dialog.style.display = 'none';
@@ -50,6 +49,8 @@
       window.addEventListener('keydown', dialogKeydownHandler);
     }
 
+    dialogClose.addEventListener('click', hideLodgeInfo);
+
     var pinClickHandler = function (e) {
       var clickedPin;
       if (e.target.classList.contains('pin')) {
@@ -66,7 +67,5 @@
         showLodgeInfo(evt.currentTarget);
       }
     });
-
-    dialogClose.addEventListener('click', hideLodgeInfo);
   };
 })();
