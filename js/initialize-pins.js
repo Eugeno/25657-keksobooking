@@ -24,14 +24,14 @@
       dialogClose.setAttribute('aria-pressed', 'true');
       window.removeEventListener('keydown', dialogKeydownHandler);
     };
+    // теперь эти переменные undefined. закрытие тоже переносить? но в задании только про открытие речь
 
     var ENTER_KEY_CODE = 13;
-    var ESCAPE_KEY_CODE = 27;
 
     var showLodgeInfo = function (clickedPin) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      window.openDialog(dialog, dialogClose, dialogKeydownHandler);
+      window.openDialog(hideLodgeInfo);
     };
 
     var hideLodgeInfo = function () {
@@ -39,17 +39,18 @@
       closeDialog(dialog, dialogClose);
     };
 
-    var dialogKeydownHandler = function (evt) {
+    /*var dialogKeydownHandler = function (evt) {
       if (evt.keyCode === ESCAPE_KEY_CODE) {
         hideLodgeInfo();
       }
-    };
+    };*/
 
-    if (dialog.style.display !== 'none') {
+    // начальная проверка как-то по-другому должна быть
+    /*if (dialog.style.display !== 'none') {
       window.addEventListener('keydown', dialogKeydownHandler);
-    }
+    }*/
 
-    dialogClose.addEventListener('click', hideLodgeInfo);
+    /*dialogClose.addEventListener('click', hideLodgeInfo);*/ 
 
     var pinClickHandler = function (e) {
       var clickedPin;

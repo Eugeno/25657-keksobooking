@@ -2,9 +2,7 @@
 
 var pinMap = document.querySelector('.tokyo__pin-map');
 var pins = pinMap.querySelectorAll('.pin');
-var dialog = document.querySelector('.dialog');
-var dialogClose = dialog.querySelector('.dialog__close');
-window.initializePins(pinMap, pins, dialog, dialogClose);
+window.initializePins(pinMap, pins);
 
 var formTime = document.querySelector('#time');
 var formTimeout = document.querySelector('#timeout');
