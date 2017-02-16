@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-  window.synchronizeFields = function (fieldIn, fieldOut, arrayIn, arrayOut, valueOut) {
+  window.synchronizeFields = function (fieldIn, fieldOut, arrayIn, arrayOut, callback) {
     fieldIn.addEventListener('change', function () {
-      fieldOut[valueOut] = arrayOut[arrayIn.indexOf(fieldIn.value)];
+      callback(arrayOut[arrayIn.indexOf(fieldIn.value)]);
     });
   };
 })();
