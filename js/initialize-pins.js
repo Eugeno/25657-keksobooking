@@ -1,6 +1,8 @@
 'use strict';
 (function () {
-  window.initializePins = function (pinMap, pins, dialog, dialogClose) {
+  window.initializePins = function (pinMap, pins) {
+    var ENTER_KEY_CODE = 13;
+    var savedPin;
 
     var deactivatePins = function () {
       for (var i = 0; i < pins.length; i++) {
@@ -14,41 +16,19 @@
       clickedPin.setAttribute('aria-pressed', 'true');
     };
 
-    var openDialog = function () {
-      dialog.style.display = 'block';
-      dialogClose.setAttribute('aria-pressed', 'false');
-      window.addEventListener('keydown', dialogKeydownHandler);
-    };
-
-    var closeDialog = function () {
-      dialog.style.display = 'none';
-      dialogClose.setAttribute('aria-pressed', 'true');
-      window.removeEventListener('keydown', dialogKeydownHandler);
-    };
-
-    var ENTER_KEY_CODE = 13;
-    var ESCAPE_KEY_CODE = 27;
-
     var showLodgeInfo = function (clickedPin) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      openDialog(dialog, dialogClose);
+      window.showCard(hideLodgeInfo);
     };
 
     var hideLodgeInfo = function () {
       deactivatePins(pins);
-      closeDialog(dialog, dialogClose);
-    };
-
-    var dialogKeydownHandler = function (evt) {
-      if (evt.keyCode === ESCAPE_KEY_CODE) {
-        hideLodgeInfo();
+      if (savedPin) {
+        savedPin.focus();
+        savedPin = null;
       }
     };
-
-    if (dialog.style.display !== 'none') {
-      window.addEventListener('keydown', dialogKeydownHandler);
-    }
 
     var pinClickHandler = function (e) {
       var clickedPin;
@@ -63,10 +43,9 @@
     pinMap.addEventListener('click', pinClickHandler);
     pinMap.addEventListener('keydown', function (evt) {
       if (evt.keyCode === ENTER_KEY_CODE) {
-        showLodgeInfo(evt.currentTarget);
+        savedPin = evt.target;
+        showLodgeInfo(evt.target);
       }
     });
-
-    dialogClose.addEventListener('click', hideLodgeInfo);
   };
 })();
