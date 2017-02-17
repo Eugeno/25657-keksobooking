@@ -1,42 +1,38 @@
 body {
-    background-color: #f0f0ea;
-    margin: 0 auto;
-    max-width: 1200px;
-
-    font-size: 16px;
     font-family: Roboto, Arial, sans-serif;
-
+    font-size: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
     color: #353535;
+    background-color: #f0f0ea;
 }
 
 h1 {
-    color: #343434;
     font-size: 29px;
+    color: #343434;
 }
 
 h2 {
-    color: #343434;
     font-size: 15px;
+    color: #343434;
 }
 
 fieldset {
-    border: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    border: none;
 }
 
 button[type=submit] {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
     box-sizing: content-box;
     width: 206px;
     height: 60px;
-
-    background-color: white;
-    font-size: 22px;
-    font-weight: bold;
-    font-family: Roboto, Arial, sans-serif;
-
+    border: 4px solid #fa9;
     border-radius: 8px;
-    border: 4px solid #ffaa99;
+    background-color: white;
 }
 
 button[type=submit]:hover {
@@ -44,32 +40,38 @@ button[type=submit]:hover {
 }
 
 button[type=submit]:active {
-    outline: none;
-    border-color: #ff6d51;
-    background-color: #ff6d51;
     color: white;
+    border-color: #ff6d51;
+    outline: none;
+    background-color: #ff6d51;
 }
 
-input[type=text], input[type=number], select, textarea {
-    box-sizing: border-box;
-
+input[type=text],
+input[type=number],
+select,
+textarea {
     font-size: 18px;
     line-height: 26px;
-    padding-left: 14px;
-
-    height: 42px;
+    box-sizing: border-box;
     width: 222px;
-
+    height: 42px;
+    padding-left: 14px;
     border: 1px solid #d9d9d3;
     border-radius: 4px;
     background-color: white;
 }
 
-input[type=text]:hover, input[type=number]:hover, select:hover, textarea:hover {
-    border-color: #ffaa99;
+input[type=text]:hover,
+input[type=number]:hover,
+select:hover,
+textarea:hover {
+    border-color: #fa9;
 }
 
-input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+input[type=text]:focus,
+input[type=number]:focus,
+select:focus,
+textarea:focus {
     outline: none;
     box-shadow: 0 0 4px 1px #ff6547;
 }
@@ -83,17 +85,14 @@ select option:hover {
 }
 
 .feature {
+    position: relative;
+    float: left;
     box-sizing: border-box;
     width: 70px;
     min-width: 70px;
     height: 45px;
     min-height: 45px;
-
     margin-right: 10px;
-
-    float: left;
-
-    position: relative;
 }
 
 .feature:last-child {
@@ -101,15 +100,13 @@ select option:hover {
 }
 
 .feature span {
-    content: "";
     position: absolute;
     top: 0;
     left: 0;
-
     box-sizing: border-box;
-
-    border-radius: 4px;
+    content: '';
     border: 1px solid #d9d9d3;
+    border-radius: 4px;
 }
 
 .feature input {
@@ -117,12 +114,12 @@ select option:hover {
 }
 
 .feature input:hover + span {
-    border-color: #ffaa99;
+    border-color: #fa9;
 }
 
 .feature input:checked + span {
-    background-color: #ff6547;
     border-color: #ff6547;
+    background-color: #ff6547;
 }
 
 .feature__image {
@@ -131,7 +128,6 @@ select option:hover {
     min-width: 70px;
     height: 45px;
     min-height: 45px;
-
     background: white url(../img/features-sprite.png) no-repeat;
 }
 
@@ -161,46 +157,38 @@ select option:hover {
 
 .upload {
     position: relative;
-
     box-sizing: border-box;
-    margin-right: 5px;
-
     width: 146px;
     min-width: 146px;
     max-width: 146px;
     height: 70px;
-
+    margin-right: 5px;
     text-align: center;
     vertical-align: middle;
-
-    border-radius: 4px;
-
     color: #cdcdc7;
-
     border: 2px dashed #b3b3ad;
+    border-radius: 4px;
 }
 
 .upload input {
     position: absolute;
     z-index: 2;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    width:100%;
-    height:100%;
 }
 
 .upload:hover {
-    border-color: #ff6547;
     color: #ff6547;
+    border-color: #ff6547;
 }
 
 .header {
-    z-index: 100;
-
     position: absolute;
-    margin: 0 auto;
+    z-index: 100;
     width: 1200px;
+    margin: 0 auto;
     text-align: center;
-
     text-transform: uppercase;
 }
 
@@ -218,44 +206,37 @@ select option:hover {
 }
 
 .tokyo__filters-container {
-    width: 1200px;
     position: absolute;
     bottom: 0;
     left: 0;
-
-    background-color: rgba(3, 28, 45, 0.5);
-
+    width: 1200px;
     height: 46px;
+    background-color: rgba(3, 28, 45, .5);
 }
 
 .tokyo__filters {
-    width: 960px;
-
-    margin: 0 auto;
-
     display: flex;
     flex-direction: row;
+    width: 960px;
+    margin: 0 auto;
     flex-wrap: nowrap;
 }
 
 .tokyo__filter {
     font-size: 14px;
-    text-indent: 0;
-
     width: 160px;
     height: 30px;
-
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
+    text-indent: 0;
 }
 
 .tokyo__filter-set {
+    display: inline;
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
-
-    display: inline;
 }
 
 .tokyo__filter-set .feature {
@@ -270,7 +251,6 @@ select option:hover {
     min-width: 30px;
     height: 28px;
     min-height: 28px;
-
     background-size: 100%;
 }
 
@@ -305,8 +285,8 @@ select option:hover {
 
 .notice__title {
     font-family: Roboto, serif;
-    font-weight: bold;
     font-size: 28px;
+    font-weight: bold;
     margin-top: 28px;
     margin-bottom: 20px;
 }
@@ -314,7 +294,6 @@ select option:hover {
 .notice__photo {
     display: flex;
     flex-direction: row;
-
     align-items: flex-start;
 }
 
@@ -323,27 +302,22 @@ select option:hover {
 }
 
 .notice__preview {
-    box-sizing: border-box;
-
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
-
-    border-radius: 4px;
-    border: 4px transparent;
-
     overflow: hidden;
-
+    box-sizing: border-box;
+    width: 70px;
+    min-width: 70px;
+    height: 70px;
     text-align: center;
-
+    border: 4px transparent;
+    border-radius: 4px;
     background: #dadad4;
 }
 
 .notice__preview:before {
-    content: '';
     display: inline-block;
-    vertical-align: middle;
     height: 100%;
+    content: '';
+    vertical-align: middle;
 }
 
 .notice__preview img {
@@ -359,7 +333,6 @@ select option:hover {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     justify-content: space-between;
     align-items: flex-start;
 }
@@ -384,8 +357,8 @@ select option:hover {
 }
 
 .form__element--wide input {
-    width: 100%;
     display: block;
+    width: 100%;
 }
 
 .form__element--wide textarea {
@@ -399,18 +372,15 @@ select option:hover {
 }
 
 .form__photo {
-    margin-right: 5px;
-    margin-bottom: 5px;
     box-sizing: border-box;
-
     width: 70px;
-    height: 70px;
     min-width: 70px;
     max-width: 70px;
-
-    border-radius: 4px;
+    height: 70px;
+    margin-right: 5px;
+    margin-bottom: 5px;
     border: 4px transparent;
-
+    border-radius: 4px;
     background: #dadad4;
 }
 
@@ -420,14 +390,12 @@ select option:hover {
 }
 
 .footer {
-    box-sizing: border-box;
-    margin: 0 auto;
-    width: 960px;
-    padding: 20px 0 40px;
-
     font-size: 12px;
-
-    border-top: solid 1px #cccccc;
+    box-sizing: border-box;
+    width: 960px;
+    margin: 0 auto;
+    padding: 20px 0 40px;
+    border-top: solid 1px #ccc;
 }
 
 .footer .center-wrapper {
@@ -440,18 +408,17 @@ select option:hover {
 
 .footer-logo,
 .footer-social {
-    flex-basis: 50%;
     width: 50%;
+    flex-basis: 50%;
 }
 
 .footer-logo {
     position: relative;
-
     padding-top: 55px;
 }
 
 .footer-logo-link:hover {
-    opacity: 0.6;
+    opacity: .6;
 }
 
 .footer-logo-image {
@@ -465,19 +432,17 @@ select option:hover {
 }
 
 .footer-social-item {
+    font-size: 0;
     display: inline-block;
+    overflow: hidden;
     width: 29px;
     height: 29px;
     margin-left: 10px;
-    overflow: hidden;
-
     list-style: none;
-    font-size: 0;
     vertical-align: top;
     text-indent: -1999em;
-
-    background: url("../img/social-sprite.png") no-repeat -59px -59px;
-    opacity: 0.6;
+    opacity: .6;
+    background: url('../img/social-sprite.png') no-repeat -59px -59px;
 }
 
 .footer-social-item:hover {
@@ -500,7 +465,7 @@ select option:hover {
     position: absolute;
     top: 70px;
     left: 20px;
-
+    display: none;
     width: 230px;
     height: 510px;
 }
@@ -511,71 +476,65 @@ select option:hover {
 
 .dialog__close {
     position: absolute;
-
     right: 0;
     bottom: 0;
 }
 
 .dialog__panel {
-    background-color: white;
-
     padding: 4px;
-
-    border-radius: 4px;
     border: 2px solid transparent;
+    border-radius: 4px;
+    background-color: white;
 }
 
 .lodge__title {
-    margin: 0 0 4px;
     font-size: 16px;
     line-height: 18px;
+    margin: 0 0 4px;
 }
 
 .lodge__address {
-    margin: 0 0 10px;
     font-size: 12px;
     line-height: 16px;
+    margin: 0 0 10px;
 }
 
 .lodge__price {
-    margin: 0 0 10px;
     font-size: 22px;
     line-height: 16px;
+    margin: 0 0 10px;
 }
 
 .lodge__type {
-    margin: 0;
     font-size: 12px;
     line-height: 16px;
+    margin: 0;
 }
 
 .lodge__rooms-and-guests {
-    margin: 0;
     font-size: 12px;
     line-height: 16px;
+    margin: 0;
 }
 
 .lodge__checkin-time {
-    margin: 0;
     font-size: 12px;
     line-height: 16px;
+    margin: 0;
 }
 
 .lodge__features {
-    margin: 10px 0;
-
     display: flex;
     flex-direction: row;
+    margin: 10px 0;
 }
 
 .lodge__features .feature__image {
     display: block;
-
     width: 30px;
     min-width: 30px;
     height: 28px;
     min-height: 28px;
-
     background-size: 100%;
 }
 
@@ -604,21 +563,18 @@ select option:hover {
 }
 
 .lodge__description {
-    margin: 0 0 10px;
     font-size: 12px;
     line-height: 16px;
+    margin: 0 0 10px;
 }
 
 .pin {
     position: absolute;
-
-    width: 56px;
-    height: 75px;
-
     top: 340px;
     left: 536px;
-
-    background-image: url("../img/pin.png");
+    width: 56px;
+    height: 75px;
+    background-image: url('../img/pin.png');
 }
 
 .pin:hover {
@@ -626,26 +582,25 @@ select option:hover {
 }
 
 .pin--active {
-    background-image: url("../img/pin-active.png");
+    background-image: url('../img/pin-active.png');
 }
 
 .pin img {
-    margin-left: 8px;
     margin-top: 8px;
+    margin-left: 8px;
 }
 
 .pin__main {
-    width: 75px;
-    height: 94px;
-
     top: 300px;
     left: 600px;
-    background-image: url("../img/main-pin.png");
+    width: 75px;
+    height: 94px;
+    background-image: url('../img/main-pin.png');
 }
 
 .pin__main img {
-    margin-left: 17px;
     margin-top: 15px;
+    margin-left: 17px;
 }
 
 .rounded {
