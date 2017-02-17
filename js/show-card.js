@@ -2,7 +2,7 @@
 (function () {
   var ENTER_KEY_CODE = 13;
   var ESCAPE_KEY_CODE = 27;
-  
+
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
 
@@ -13,7 +13,7 @@
       }
     };
 
-    var hideCard = function() {
+    var hideCard = function () {
       dialog.style.display = 'none';
       dialogClose.removeEventListener('click', hideCard);
       window.removeEventListener('keydown', onKeyDown);
