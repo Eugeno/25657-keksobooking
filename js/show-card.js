@@ -34,6 +34,42 @@
       dialogClose = dialog.querySelector('.dialog__close');                 // в нём нашли крестик
 
       tokyoMap.appendChild(dialog);                                         // диалог — на карту
+
+      var getOfferTypeText = function (type) {
+        switch (type) {                                                     // в зависимости от переданного значения
+          case 'flat':                                                      // ставим русские названия типов
+            return 'Квартира';
+            break;
+          case 'bungalo':
+            return 'Бунгало';
+            break;
+          case 'house':
+            return 'Дом';
+        }
+      };
+
+      var getOfferRoomsText = function (rooms, guests) {
+        switch (rooms) {                                                    // смотрим, сколько комнат
+          case 0:                                                           // нет комнат — нет гостей
+            return 'Нет комнат для гостей';
+            break;
+          case 1:                                                           // одна комната
+            switch (guests) {
+              case 0:
+                return '1 комната';
+                break;
+              case 1:
+                return '1 комната для ' + rooms + ' гостя';
+            }
+            break;
+          case 2:                                                           // две
+            return rooms + ' комнаты для ' + guests + ' гостей';
+            break;
+          case 100:                                                         // или сто (по условиям формы)
+            return rooms + ' комнат для ' + guests + ' гостей';
+            break;
+        }
+      };
                                                                             // переменные для объявления:
       var dialogTitle = dialog.querySelector('.dialog__title');             // аватарка
       var lodgeTitle = dialog.querySelector('.lodge__title');               // заголовок
@@ -57,37 +93,9 @@
       lodgeAddress.innerText = lodgeData.offer.address;                     // адрес
       lodgePrice.innerText = lodgeData.offer.price + ' ₽/ночь';             // и цену
 
-      switch (lodgeData.offer.type) {                                       // в зависимости от переданного значения
-        case 'flat':                                                        // ставим русские названия типов
-          lodgeType.innerText = 'Квартира';
-          break;
-        case 'bungalo':
-          lodgeType.innerText = 'Бунгало';
-          break;
-        case 'house':
-          lodgeType.innerText = 'Дом';
-      }
+      lodgeType.innerText = getOfferTypeText(lodgeData.offer.type);         // типа жилья
+      lodgeRG.innerText = getOfferRoomsText(lodgeData.offer.rooms, lodgeData.offer.guests);  // комнаты и гости
 
-      switch (lodgeData.offer.rooms) {                                      // смотрим, сколько комнат
-        case 0:                                                             // нет комнат — нет гостей
-          lodgeRG.innerText = 'Нет комнат для гостей';
-          break;
-        case 1:                                                             // одна комната
-          switch (lodgeData.offer.guests) {
-            case 0:
-              lodgeRG.innerText = '1 комната';
-              break;
-            case 1:
-              lodgeRG.innerText = '1 комната для ' + lodgeData.offer.guests + ' гостя';
-          }
-          break;
-        case 2:                                                             // две
-          lodgeRG.innerText = lodgeData.offer.rooms + ' комнаты для ' + lodgeData.offer.guests + ' гостей';
-          break;
-        case 100:                                                           // или сто (по условиям формы)
-          lodgeRG.innerText = lodgeData.offer.rooms + ' комнат для ' + lodgeData.offer.guests + ' гостей';
-          break;
-      }
                                                                             // пишем про время заезда и выезда
       lodgeCTime.innerText = 'Заезд после ' + lodgeData.offer.checkin + ', выезд до ' + lodgeData.offer.checkout;
 

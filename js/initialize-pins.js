@@ -70,8 +70,6 @@
         newPin.style.left = similarApartments[i].location.x + 'px';            // икс
         newPin.style.top = similarApartments[i].location.y + 'px';             // игрек
 
-        pins = pinMap.querySelectorAll('.pin');                                // соберём заново массив пинов
-
         newPin.setAttribute('data-pin', i);                                    // каждой новой метке даём опознавательный знак
         lodgeData[i] = similarApartments[i];                                   // формируем массив с данными
       }
