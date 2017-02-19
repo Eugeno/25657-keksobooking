@@ -465,7 +465,6 @@ select option:hover {
     position: absolute;
     top: 70px;
     left: 20px;
-    display: none;
     width: 230px;
     height: 510px;
 }
@@ -566,6 +565,18 @@ select option:hover {
     font-size: 12px;
     line-height: 16px;
     margin: 0 0 10px;
+}
+
+.lodge__photos {
+    margin-top: -3px;
+    margin-left: -3px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lodge__photos img {
+    margin-top: 3px;
+    margin-left: 3px;
 }
 
 .pin {
