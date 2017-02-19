@@ -63,17 +63,17 @@
 
     var lodgeData = [];                                                        // создаём массив, где будут данные по рисуемым меткам
 
-    var pinFilter                = document.querySelector('.tokyo__filters-container');
-    var filterType               = pinFilter.querySelector('#housing_type');
-    var filterPrice              = pinFilter.querySelector('#housing_price');
-    var filterRooms              = pinFilter.querySelector('#housing_room-number');
-    var filterGuests             = pinFilter.querySelector('#housing_guests-number');
-    var filterFeatures           = pinFilter.querySelector('#housing_features');
-    var filterFeatureWifi        = filterFeatures.querySelector('[value=wifi]');
-    var filterFeatureDishwacher  = filterFeatures.querySelector('[value=dishwasher]');
-    var filterFeatureParking     = filterFeatures.querySelector('[value=parking]');
-    var filterFeatureWasher      = filterFeatures.querySelector('[value=washer]');
-    var filterFeatureElevator    = filterFeatures.querySelector('[value=elevator]');
+    var pinFilter = document.querySelector('.tokyo__filters-container');
+    var filterType = pinFilter.querySelector('#housing_type');
+    var filterPrice = pinFilter.querySelector('#housing_price');
+    var filterRooms = pinFilter.querySelector('#housing_room-number');
+    var filterGuests = pinFilter.querySelector('#housing_guests-number');
+    var filterFeatures = pinFilter.querySelector('#housing_features');
+    var filterFeatureWifi = filterFeatures.querySelector('[value=wifi]');
+    var filterFeatureDishwacher = filterFeatures.querySelector('[value=dishwasher]');
+    var filterFeatureParking = filterFeatures.querySelector('[value=parking]');
+    var filterFeatureWasher = filterFeatures.querySelector('[value=washer]');
+    var filterFeatureElevator = filterFeatures.querySelector('[value=elevator]');
     var filterFeatureConditioner = filterFeatures.querySelector('[value=conditioner]');
 
     var pinFilters = {};
@@ -116,7 +116,7 @@
             (pinFilters.type === 'any' || pinFilters.type === similarApartments[i].offer.type) &&
             (
               (pinFilters.price === 'low' && similarApartments[i].offer.price < 10000) ||
-              (pinFilters.price === 'middle' && similarApartments[i].offer.price >= 10000 && +similarApartments[i].offer.price <= 50000)  ||
+              (pinFilters.price === 'middle' && similarApartments[i].offer.price >= 10000 && +similarApartments[i].offer.price <= 50000) ||
               (pinFilters.price === 'high' && similarApartments[i].offer.price > 50000)
             ) &&
             (pinFilters.rooms === 'any' || +pinFilters.rooms === similarApartments[i].offer.rooms) &&
@@ -129,27 +129,16 @@
             (!pinFilters.features.conditioner || pinFilters.features && similarApartments[i].offer.features.indexOf('conditioner') !== -1)
           );
         };
-                                                                                 // если ничего не передали
-        if (pinFilters === undefined) {                          // или метка подходит
-          // рисуем новую метку
+
+        if (pinFilters === undefined || pinIsValid()) {                          // если ничего не передали или метка подходит
           var newPin = pinToClone.cloneNode(true);                                 // новый пин — копия из шаблона
           pinMap.appendChild(newPin);                                              // метку — на карту
           newPin.querySelector('img').src = similarApartments[i].author.avatar;    // задаём аватар
           newPin.style.left = similarApartments[i].location.x + 'px';              // икс
           newPin.style.top = similarApartments[i].location.y + 'px';               // игрек
-          
+
           newPin.setAttribute('data-pin', i);                                      // каждой новой метке даём опознавательный знак
           lodgeData[i] = similarApartments[i];                                     // формируем массив с данными
-        } else if (pinIsValid()) {                          // или метка подходит
-            // рисуем новую метку
-            var newPin = pinToClone.cloneNode(true);                               // новый пин — копия из шаблона
-            pinMap.appendChild(newPin);                                            // метку — на карту
-            newPin.querySelector('img').src = similarApartments[i].author.avatar;  // задаём аватар
-            newPin.style.left = similarApartments[i].location.x + 'px';            // икс
-            newPin.style.top = similarApartments[i].location.y + 'px';             // игрек
-
-            newPin.setAttribute('data-pin', i);                                    // каждой новой метке даём опознавательный знак
-            lodgeData[i] = similarApartments[i];                                   // формируем массив с данными
         } else {
           if (maxPin < similarApartments.length) {                                 // проверив, есть ли ещё метки
             maxPin++;                                                              // будем смотреть дальше
