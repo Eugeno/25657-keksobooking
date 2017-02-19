@@ -36,39 +36,42 @@
       tokyoMap.appendChild(dialog);                                         // диалог — на карту
 
       var getOfferTypeText = function (type) {
+        var retVal = '';                                                    // то, что будем возвращать
         switch (type) {                                                     // в зависимости от переданного значения
           case 'flat':                                                      // ставим русские названия типов
-            return 'Квартира';
+            retVal = 'Квартира';
             break;
           case 'bungalo':
-            return 'Бунгало';
+            retVal = 'Бунгало';
             break;
           case 'house':
-            return 'Дом';
+            retVal = 'Дом';
         }
+        return retVal;
       };
 
       var getOfferRoomsText = function (rooms, guests) {
+        var retVal = '';                                                    // то, что будем возвращать
         switch (rooms) {                                                    // смотрим, сколько комнат
           case 0:                                                           // нет комнат — нет гостей
-            return 'Нет комнат для гостей';
+            retVal = 'Нет комнат для гостей';
             break;
           case 1:                                                           // одна комната
             switch (guests) {
               case 0:
-                return '1 комната';
+                retVal = '1 комната';
                 break;
               case 1:
-                return '1 комната для ' + rooms + ' гостя';
+                retVal = '1 комната для ' + rooms + ' гостя';
             }
             break;
           case 2:                                                           // две
-            return rooms + ' комнаты для ' + guests + ' гостей';
+            retVal = rooms + ' комнаты для ' + guests + ' гостей';
             break;
           case 100:                                                         // или сто (по условиям формы)
-            return rooms + ' комнат для ' + guests + ' гостей';
-            break;
+            retVal = rooms + ' комнат для ' + guests + ' гостей';
         }
+        return retVal;
       };
                                                                             // переменные для объявления:
       var dialogTitle = dialog.querySelector('.dialog__title');             // аватарка
