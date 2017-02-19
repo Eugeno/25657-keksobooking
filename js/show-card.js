@@ -50,27 +50,28 @@
     };
 
     var getOfferRoomsText = function (rooms, guests) {
-      var retVal = '';                                  // то, что будем возвращать
-      switch (rooms) {                                  // смотрим, сколько комнат
-        case 0:                                         // нет комнат — нет гостей
-          retVal = 'Нет комнат для гостей';
-          break;
-        case 1:                                         // одна комната
-          switch (guests) {
-            case 0:
-              retVal = '1 комната';
-              break;
-            case 1:
-              retVal = '1 комната для ' + rooms + ' гостя';
-          }
-          break;
-        case 2:                                         // две
-          retVal = rooms + ' комнаты для ' + guests + ' гостей';
-          break;
-        case 100:                                       // или сто (по условиям формы)
-          retVal = rooms + ' комнат для ' + guests + ' гостей';
+      var roomsText = '';
+      var guestsText = '';
+
+      if (rooms === 0) {
+        roomsText = 'Нет комнат';
+      } else if (rooms % 10 === 1) {
+        roomsText = rooms + ' комната';
+      } else if (rooms % 10 === 2 || rooms % 10 === 3 || rooms % 10 === 4) {
+        roomsText = rooms + ' комнаты';
+      } else {
+        roomsText = rooms + ' комнат';
       }
-      return retVal;
+
+      if (guests === 0) {
+        guestsText = '';
+      } else if (guests % 10 === 1) {
+        guestsText = 'для ' + guests + ' гостя';
+      } else {
+        guestsText = 'для ' + guests + ' гостей';
+      }
+
+      return roomsText + ' ' + guestsText;
     };
     // переменные для объявления:
     var dialogTitle = dialog.querySelector('.dialog__title');             // аватарка
@@ -98,7 +99,7 @@
     lodgeType.innerText = getOfferTypeText(lodgeData.offer.type);         // типа жилья
     lodgeRG.innerText = getOfferRoomsText(lodgeData.offer.rooms, lodgeData.offer.guests);  // комнаты и гости
 
-    // пишем про время заезда и выезда
+                                                                          // пишем про время заезда и выезда
     lodgeCTime.innerText = 'Заезд после ' + lodgeData.offer.checkin + ', выезд до ' + lodgeData.offer.checkout;
 
     for (var j = 0; j < lodgeData.offer.features.length; j++) {           // смотрим, сколько фич в данных
