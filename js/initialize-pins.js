@@ -101,7 +101,7 @@
     var pinDataUrl = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';  // откуда будем брать данные
     window.load(pinDataUrl, onLoad);                                                             // загружаем данные, колбек на то, что будем делать после
 
-    var renderPins = function (pinFilters) {                                   // рисуем новые метки
+    var renderPins = function (filterData) {                                   // рисуем новые метки
       var maxPin = 3;                                                          // максимальное количество отображаемых меток
       if (maxPin > similarApartments.length) {                                 // если данных получили меньше,
         maxPin = similarApartments.length;                                     // то не создаём пустых элементов
@@ -118,20 +118,20 @@
       for (var i = 0; i < maxPin; i++) {
         var pinIsValid = function () {                                           // проверка соответствия метки
           return (
-            (pinFilters.type === 'any' || pinFilters.type === similarApartments[i].offer.type) &&
+            (filterData.type === 'any' || filterData.type === similarApartments[i].offer.type) &&
             (
-              (pinFilters.price === 'low' && similarApartments[i].offer.price < 10000) ||
-              (pinFilters.price === 'middle' && similarApartments[i].offer.price >= 10000 && +similarApartments[i].offer.price <= 50000) ||
-              (pinFilters.price === 'high' && similarApartments[i].offer.price > 50000)
+              (filterData.price === 'low' && similarApartments[i].offer.price < 10000) ||
+              (filterData.price === 'middle' && similarApartments[i].offer.price >= 10000 && +similarApartments[i].offer.price <= 50000) ||
+              (filterData.price === 'high' && similarApartments[i].offer.price > 50000)
             ) &&
-            (pinFilters.rooms === 'any' || +pinFilters.rooms === similarApartments[i].offer.rooms) &&
-            (pinFilters.guests === 'any' || +pinFilters.guests === similarApartments[i].offer.guests) &&
-            (!pinFilters.features.wifi || pinFilters.features && similarApartments[i].offer.features.indexOf('wifi') !== -1) &&
-            (!pinFilters.features.dishwasher || pinFilters.features && similarApartments[i].offer.features.indexOf('dishwasher') !== -1) &&
-            (!pinFilters.features.parking || pinFilters.features && similarApartments[i].offer.features.indexOf('parking') !== -1) &&
-            (!pinFilters.features.washer || pinFilters.features && similarApartments[i].offer.features.indexOf('washer') !== -1) &&
-            (!pinFilters.features.elevator || pinFilters.features && similarApartments[i].offer.features.indexOf('elevator') !== -1) &&
-            (!pinFilters.features.conditioner || pinFilters.features && similarApartments[i].offer.features.indexOf('conditioner') !== -1)
+            (filterData.rooms === 'any' || +filterData.rooms === similarApartments[i].offer.rooms) &&
+            (filterData.guests === 'any' || +filterData.guests === similarApartments[i].offer.guests) &&
+            (!filterData.features.wifi || filterData.features && similarApartments[i].offer.features.indexOf('wifi') !== -1) &&
+            (!filterData.features.dishwasher || filterData.features && similarApartments[i].offer.features.indexOf('dishwasher') !== -1) &&
+            (!filterData.features.parking || filterData.features && similarApartments[i].offer.features.indexOf('parking') !== -1) &&
+            (!filterData.features.washer || filterData.features && similarApartments[i].offer.features.indexOf('washer') !== -1) &&
+            (!filterData.features.elevator || filterData.features && similarApartments[i].offer.features.indexOf('elevator') !== -1) &&
+            (!filterData.features.conditioner || filterData.features && similarApartments[i].offer.features.indexOf('conditioner') !== -1)
           );
         };
 
