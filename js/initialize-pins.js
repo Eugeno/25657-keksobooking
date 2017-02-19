@@ -49,15 +49,6 @@
       }
     };
 
-    var similarApartments = [];              // создаём массив, где будут все данные
-    var onLoad = function (data) {           // когда произойдёт их загрузка
-      similarApartments = JSON.parse(data);  // записываем в массив данные, полученные из JSON
-      renderPins(pinFilters);                          // рисуем метки с данными
-    };
-
-    var pinDataUrl = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';  // откуда будем брать данные
-    window.load(pinDataUrl, onLoad);                                                             // загружаем данные, колбек на то, что будем делать после
-
     var pinTemplate = document.querySelector('#pin-template');                 // находим шаблон
     var pinToClone = pinTemplate.content.querySelector('.pin');                // а в нём то, что будем копировать
 
@@ -96,6 +87,20 @@
     };
     refreshFilters();
 
+    pinFilter.addEventListener('change', function () {
+      refreshFilters();
+      renderPins(pinFilters);
+    });
+
+    var similarApartments = [];              // создаём массив, где будут все данные
+    var onLoad = function (data) {           // когда произойдёт их загрузка
+      similarApartments = JSON.parse(data);  // записываем в массив данные, полученные из JSON
+      renderPins(pinFilters);                          // рисуем метки с данными
+    };
+
+    var pinDataUrl = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';  // откуда будем брать данные
+    window.load(pinDataUrl, onLoad);                                                             // загружаем данные, колбек на то, что будем делать после
+
     var renderPins = function (pinFilters) {                                   // рисуем новые метки
       var maxPin = 3;                                                          // максимальное количество отображаемых меток
       if (maxPin > similarApartments.length) {                                 // если данных получили меньше,
@@ -130,7 +135,7 @@
           );
         };
 
-        if (pinFilters === undefined || pinIsValid()) {                          // если ничего не передали или метка подходит
+        if (pinIsValid()) {                                                        // если ничего не передали или метка подходит
           var newPin = pinToClone.cloneNode(true);                                 // новый пин — копия из шаблона
           pinMap.appendChild(newPin);                                              // метку — на карту
           newPin.querySelector('img').src = similarApartments[i].author.avatar;    // задаём аватар
@@ -151,9 +156,5 @@
       pinMap.addEventListener('keydown', pinKeydownHandler);                   // и на нажатие
     };
 
-    pinFilter.addEventListener('change', function () {
-      refreshFilters();
-      renderPins(pinFilters);
-    });
   };
 })();
