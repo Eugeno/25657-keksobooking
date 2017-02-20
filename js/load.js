@@ -1,13 +1,13 @@
 'use strict';
 (function () {
-  window.load = function (url, onLoad) {                // загружаем данные
-    var xhr = new XMLHttpRequest();                     // создаём новый запрос
-    xhr.open('GET', url);                               // отправляем запрос по ссылке
+  window.load = function (url, onLoad) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
 
-    xhr.addEventListener('load', function (e) {         // в случае загрузки
-      onLoad(e.target.response);                        // колбек в случае загрузки
+    xhr.addEventListener('load', function (e) {
+      onLoad(e.target.response);
     });
 
-    xhr.send();                                         // отсылаем
+    xhr.send();
   };
 })();
