@@ -24,26 +24,26 @@
     };
   };
 
-  var pinIsValid = function (similarApartments, filterData) {
+  var pinIsValid = function (apartmentData, filterData) {
     return (
-      (filterData.type === 'any' || filterData.type === similarApartments.offer.type) &&
+      (filterData.type === 'any' || filterData.type === apartmentData.offer.type) &&
       (
-        (filterData.price === 'low' && similarApartments.offer.price < 10000) ||
-        (filterData.price === 'middle' && similarApartments.offer.price >= 10000 && +similarApartments.offer.price <= 50000) ||
-        (filterData.price === 'high' && similarApartments.offer.price > 50000)
+        (filterData.price === 'low' && apartmentData.offer.price < 10000) ||
+        (filterData.price === 'middle' && apartmentData.offer.price >= 10000 && +similarApartments.offer.price <= 50000) ||
+        (filterData.price === 'high' && apartmentData.offer.price > 50000)
       ) &&
-      (filterData.rooms === 'any' || +filterData.rooms === similarApartments.offer.rooms) &&
-      (filterData.guests === 'any' || +filterData.guests === similarApartments.offer.guests) &&
-      (!filterData.features.wifi || filterData.features && similarApartments.offer.features.indexOf('wifi') !== -1) &&
-      (!filterData.features.dishwasher || filterData.features && similarApartments.offer.features.indexOf('dishwasher') !== -1) &&
-      (!filterData.features.parking || filterData.features && similarApartments.offer.features.indexOf('parking') !== -1) &&
-      (!filterData.features.washer || filterData.features && similarApartments.offer.features.indexOf('washer') !== -1) &&
-      (!filterData.features.elevator || filterData.features && similarApartments.offer.features.indexOf('elevator') !== -1) &&
-      (!filterData.features.conditioner || filterData.features && similarApartments.offer.features.indexOf('conditioner') !== -1)
+      (filterData.rooms === 'any' || +filterData.rooms === apartmentData.offer.rooms) &&
+      (filterData.guests === 'any' || +filterData.guests === apartmentData.offer.guests) &&
+      (!filterData.features.wifi || filterData.features && apartmentData.offer.features.indexOf('wifi') !== -1) &&
+      (!filterData.features.dishwasher || filterData.features && apartmentData.offer.features.indexOf('dishwasher') !== -1) &&
+      (!filterData.features.parking || filterData.features && apartmentData.offer.features.indexOf('parking') !== -1) &&
+      (!filterData.features.washer || filterData.features && apartmentData.offer.features.indexOf('washer') !== -1) &&
+      (!filterData.features.elevator || filterData.features && apartmentData.offer.features.indexOf('elevator') !== -1) &&
+      (!filterData.features.conditioner || filterData.features && apartmentData.offer.features.indexOf('conditioner') !== -1)
     );
   };
 
-  var updatePins = function (oldPins) {
+  var updatePins = function (oldPins, pinsContainer) {
     var filterData = getFilters();
     var pins = [];
     var MAX_PINS_COUNT = 3;
@@ -64,7 +64,7 @@
     for (i = 0; i < pinsCount; i++) {
       if (pinIsValid(similarApartments[i], filterData)) {
         var newPin = pinToClone.cloneNode(true);
-        pinMap.appendChild(newPin);
+        pinsContainer.appendChild(newPin);
         newPin.querySelector('img').src = similarApartments[i].author.avatar;
         newPin.style.left = similarApartments[i].location.x + 'px';
         newPin.style.top = similarApartments[i].location.y + 'px';
@@ -98,10 +98,10 @@
       }
     };
 
-    var showLodgeInfo = function (clickedPin, lodgeData) {
+    var showLodgeInfo = function (clickedPin, curLodgeData) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      window.showCard(hideLodgeInfo, lodgeData);
+      window.showCard(hideLodgeInfo, curLodgeData);
     };
 
     var hideLodgeInfo = function () {
@@ -132,11 +132,11 @@
 
     var onLoad = function (data) {
       similarApartments = JSON.parse(data);
-      pins = updatePins(pins);
+      pins = updatePins(pins, pinMap);
     };
 
     formFilter.addEventListener('change', function () {
-      pins = updatePins(pins);
+      pins = updatePins(pins, pinMap);
     });
 
     window.load(PIN_DARA_URL, onLoad);
