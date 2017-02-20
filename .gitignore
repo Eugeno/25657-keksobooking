@@ -3,6 +3,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 .idea
+.csscomb.json
 *.sublime*
 *.log
 *.psd

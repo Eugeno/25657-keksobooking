@@ -49,34 +49,112 @@
       }
     };
 
+    var pinTemplate = document.querySelector('#pin-template');                 // находим шаблон
+    var pinToClone = pinTemplate.content.querySelector('.pin');                // а в нём то, что будем копировать
+
+    var lodgeData = [];                                                        // создаём массив, где будут данные по рисуемым меткам
+
+    var pinFilter = document.querySelector('.tokyo__filters-container');
+    var filterType = pinFilter.querySelector('#housing_type');
+    var filterPrice = pinFilter.querySelector('#housing_price');
+    var filterRooms = pinFilter.querySelector('#housing_room-number');
+    var filterGuests = pinFilter.querySelector('#housing_guests-number');
+    var filterFeatures = pinFilter.querySelector('#housing_features');
+    var filterFeatureWifi = filterFeatures.querySelector('[value=wifi]');
+    var filterFeatureDishwacher = filterFeatures.querySelector('[value=dishwasher]');
+    var filterFeatureParking = filterFeatures.querySelector('[value=parking]');
+    var filterFeatureWasher = filterFeatures.querySelector('[value=washer]');
+    var filterFeatureElevator = filterFeatures.querySelector('[value=elevator]');
+    var filterFeatureConditioner = filterFeatures.querySelector('[value=conditioner]');
+
+    var pinFilters = {};
+
+    var refreshFilters = function () {
+      pinFilters = {
+        'type': filterType.value,
+        'price': filterPrice.value,
+        'rooms': filterRooms.value,
+        'guests': filterGuests.value,
+        'features': {
+          'wifi': filterFeatureWifi.checked,
+          'dishwasher': filterFeatureDishwacher.checked,
+          'parking': filterFeatureParking.checked,
+          'washer': filterFeatureWasher.checked,
+          'elevator': filterFeatureElevator.checked,
+          'conditioner': filterFeatureConditioner.checked
+        }
+      };
+    };
+    refreshFilters();
+
+    pinFilter.addEventListener('change', function () {
+      refreshFilters();
+      renderPins(pinFilters);
+    });
+
     var similarApartments = [];              // создаём массив, где будут все данные
     var onLoad = function (data) {           // когда произойдёт их загрузка
       similarApartments = JSON.parse(data);  // записываем в массив данные, полученные из JSON
-      renderPins();                          // рисуем метки с данными
+      renderPins(pinFilters);                          // рисуем метки с данными
     };
 
     var pinDataUrl = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';  // откуда будем брать данные
     window.load(pinDataUrl, onLoad);                                                             // загружаем данные, колбек на то, что будем делать после
 
-    var pinTemplate = document.querySelector('#pin-template');                 // находим шаблон
-    var pinToClone = pinTemplate.content.querySelector('.pin');                // а в нём то, что будем копировать
+    var renderPins = function (filterData) {                                   // рисуем новые метки
+      var maxPin = 3;                                                          // максимальное количество отображаемых меток
+      if (maxPin > similarApartments.length) {                                 // если данных получили меньше,
+        maxPin = similarApartments.length;                                     // то не создаём пустых элементов
+      }
 
-    var lodgeData = [];                                                        // создаём массив, где будут данные по рисуемым меткам
-    var renderPins = function () {                                             // рисуем новые метки
-      for (var i = 0; i < 3; i++) {                                            // три штуки
-        var newPin = pinToClone.cloneNode(true);                               // новый пин — копия из шаблона
-        pinMap.appendChild(newPin);                                            // метку — на карту
-        newPin.querySelector('img').src = similarApartments[i].author.avatar;  // задаём аватар
-        newPin.style.left = similarApartments[i].location.x + 'px';            // икс
-        newPin.style.top = similarApartments[i].location.y + 'px';             // игрек
+      for (var p = 0; p < pins.length; p++) {
+        pins[p].remove();                                                      // уберём прошлые метки
+      }
+      var dialog = document.querySelector('.dialog');                          // и карточку, если есть
+      if (dialog) {
+        dialog.remove();
+      }
 
-        newPin.setAttribute('data-pin', i);                                    // каждой новой метке даём опознавательный знак
-        lodgeData[i] = similarApartments[i];                                   // формируем массив с данными
+      for (var i = 0; i < maxPin; i++) {
+        var pinIsValid = function () {                                           // проверка соответствия метки
+          return (
+            (filterData.type === 'any' || filterData.type === similarApartments[i].offer.type) &&
+            (
+              (filterData.price === 'low' && similarApartments[i].offer.price < 10000) ||
+              (filterData.price === 'middle' && similarApartments[i].offer.price >= 10000 && +similarApartments[i].offer.price <= 50000) ||
+              (filterData.price === 'high' && similarApartments[i].offer.price > 50000)
+            ) &&
+            (filterData.rooms === 'any' || +filterData.rooms === similarApartments[i].offer.rooms) &&
+            (filterData.guests === 'any' || +filterData.guests === similarApartments[i].offer.guests) &&
+            (!filterData.features.wifi || filterData.features && similarApartments[i].offer.features.indexOf('wifi') !== -1) &&
+            (!filterData.features.dishwasher || filterData.features && similarApartments[i].offer.features.indexOf('dishwasher') !== -1) &&
+            (!filterData.features.parking || filterData.features && similarApartments[i].offer.features.indexOf('parking') !== -1) &&
+            (!filterData.features.washer || filterData.features && similarApartments[i].offer.features.indexOf('washer') !== -1) &&
+            (!filterData.features.elevator || filterData.features && similarApartments[i].offer.features.indexOf('elevator') !== -1) &&
+            (!filterData.features.conditioner || filterData.features && similarApartments[i].offer.features.indexOf('conditioner') !== -1)
+          );
+        };
+
+        if (pinIsValid()) {                                                        // если ничего не передали или метка подходит
+          var newPin = pinToClone.cloneNode(true);                                 // новый пин — копия из шаблона
+          pinMap.appendChild(newPin);                                              // метку — на карту
+          newPin.querySelector('img').src = similarApartments[i].author.avatar;    // задаём аватар
+          newPin.style.left = similarApartments[i].location.x + 'px';              // икс
+          newPin.style.top = similarApartments[i].location.y + 'px';               // игрек
+
+          newPin.setAttribute('data-pin', i);                                      // каждой новой метке даём опознавательный знак
+          lodgeData[i] = similarApartments[i];                                     // формируем массив с данными
+        } else {
+          if (maxPin < similarApartments.length) {                                 // проверив, есть ли ещё метки
+            maxPin++;                                                              // будем смотреть дальше
+          }
+        }
       }
 
       pins = pinMap.querySelectorAll('.pin');                                  // соберём заново массив пинов
       pinMap.addEventListener('click', pinClickHandler);                       // повесим обработчик клика на контейнер с пинами
       pinMap.addEventListener('keydown', pinKeydownHandler);                   // и на нажатие
     };
+
   };
 })();
