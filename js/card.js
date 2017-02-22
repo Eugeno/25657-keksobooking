@@ -8,6 +8,8 @@
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
 
+  var dialogClose;
+
   var getOfferTypeText = function (type) {
     var retVal = '';
     switch (type) {
@@ -103,27 +105,33 @@
     }
   };
 
-  window.showCard = function (closeHandler, lodgeData) {
+  var onKeyDown = function (e) {
+    if ((e.target === dialogClose && e.keyCode === ENTER_KEY_CODE) || e.keyCode === ESCAPE_KEY_CODE) {
+      hideCard();
+    }
+  };
+
+  var showCard = function (closeHandler, lodgeData) {
     removeOldDialog();
-
-    var onKeyDown = function (e) {
-      if ((e.target === dialogClose && e.keyCode === ENTER_KEY_CODE) || e.keyCode === ESCAPE_KEY_CODE) {
-        hideCard();
-      }
-    };
-
-    var hideCard = function () {
-      dialogClose.removeEventListener('click', hideCard);
-      window.removeEventListener('keydown', onKeyDown);
-      removeOldDialog();
-      closeHandler();
-    };
-
     var dialog = dialogToClone.cloneNode(true);
-    var dialogClose = dialog.querySelector('.dialog__close');
+    dialogClose = dialog.querySelector('.dialog__close');
     fillDialog(dialog, lodgeData);
     tokyoMap.appendChild(dialog);
     dialogClose.addEventListener('click', hideCard);
     window.addEventListener('keydown', onKeyDown);
+    closeHandler();
   };
+
+  var hideCard = function () {
+    if (dialogClose) {
+      dialogClose.removeEventListener('click', hideCard);
+    }
+    window.removeEventListener('keydown', onKeyDown);
+    removeOldDialog();
+  };
+
+  window.card = {
+    show: showCard,
+    hide: hideCard
+  }
 })();

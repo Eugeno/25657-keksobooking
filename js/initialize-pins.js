@@ -5,7 +5,7 @@
   var similarApartments = [];
   var pinTemplate = document.querySelector('#pin-template');
   var pinToClone = pinTemplate.content.querySelector('.pin');
-  var lodgeData = [];
+  /*var lodgeData = [];*/
 
   var getFilters = function () {
     return {
@@ -29,7 +29,7 @@
       (filterData.type === 'any' || filterData.type === apartmentData.offer.type) &&
       (
         (filterData.price === 'low' && apartmentData.offer.price < 10000) ||
-        (filterData.price === 'middle' && apartmentData.offer.price >= 10000 && +similarApartments.offer.price <= 50000) ||
+        (filterData.price === 'middle' && apartmentData.offer.price >= 10000 && +apartmentData.offer.price <= 50000) ||
         (filterData.price === 'high' && apartmentData.offer.price > 50000)
       ) &&
       (filterData.rooms === 'any' || +filterData.rooms === apartmentData.offer.rooms) &&
@@ -47,34 +47,30 @@
     var filterData = getFilters();
     var pins = [];
     var MAX_PINS_COUNT = 3;
-    var pinsCount = MAX_PINS_COUNT;
-    var i;
-    var oldDialog = document.querySelector('.dialog');
-    for (i = 0; i < oldPins.length; i++) {
-      oldPins[i].remove();
-    }
-    if (oldDialog) {
-      oldDialog.remove();
-    }
+    oldPins.forEach(function(oldPin) {
+      oldPin.remove();
+    });
+    window.card.hide();
 
-    if (MAX_PINS_COUNT > similarApartments.length) {
-      pinsCount = similarApartments.length;
-    }
+    var createPinElement = function (apartment, i) {
+      newPin = pinToClone.cloneNode(true);
+      pinsContainer.appendChild(newPin);
+      newPin.querySelector('img').src = apartment.author.avatar;
+      newPin.style.left = apartment.location.x + 'px';
+      newPin.style.top = apartment.location.y + 'px';
+      newPin.setAttribute('data-pin', i.toString());
+      /*lodgeData[i] = apartment;*/
+      return newPin;
+    };
 
-    for (i = 0; i < pinsCount; i++) {
-      if (pinIsValid(similarApartments[i], filterData)) {
-        var newPin = pinToClone.cloneNode(true);
-        pinsContainer.appendChild(newPin);
-        newPin.querySelector('img').src = similarApartments[i].author.avatar;
-        newPin.style.left = similarApartments[i].location.x + 'px';
-        newPin.style.top = similarApartments[i].location.y + 'px';
-        newPin.setAttribute('data-pin', i.toString());
+    for (var i = 0; i < similarApartments.length; i++) {
+      var apartment = similarApartments[i];
+      if (pinIsValid(apartment, filterData)) {
+        var newPin = createPinElement(apartment, i);
         pins.push(newPin);
-        lodgeData[i] = similarApartments[i];
-      } else {
-        if (pinsCount < similarApartments.length) {
-          pinsCount++;
-        }
+      }
+      if (pins.length === MAX_PINS_COUNT) {
+        break;
       }
     }
 
@@ -101,7 +97,7 @@
     var showLodgeInfo = function (clickedPin, curLodgeData) {
       deactivatePins(pins);
       activatePin(clickedPin);
-      window.showCard(hideLodgeInfo, curLodgeData);
+      window.card.show(hideLodgeInfo, curLodgeData);
     };
 
     var hideLodgeInfo = function () {
@@ -119,14 +115,14 @@
       } else if (e.target.parentNode.hasAttribute('data-pin')) {
         clickedPin = e.target.parentNode;
       }
-      showLodgeInfo(clickedPin, lodgeData[clickedPin.getAttribute('data-pin')]);
+      showLodgeInfo(clickedPin, similarApartments[clickedPin.getAttribute('data-pin')]);
     };
 
     var pinKeydownHandler = function (e) {
       if (e.keyCode === ENTER_KEY_CODE) {
         var clickedPin = e.target;
         savedPin = clickedPin;
-        showLodgeInfo(clickedPin, lodgeData[clickedPin.getAttribute('data-pin')]);
+        showLodgeInfo(clickedPin, similarApartments[clickedPin.getAttribute('data-pin')]);
       }
     };
 
