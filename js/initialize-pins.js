@@ -5,7 +5,6 @@
   var similarApartments = [];
   var pinTemplate = document.querySelector('#pin-template');
   var pinToClone = pinTemplate.content.querySelector('.pin');
-  /*var lodgeData = [];*/
 
   var getFilters = function () {
     return {
@@ -47,7 +46,7 @@
     var filterData = getFilters();
     var pins = [];
     var MAX_PINS_COUNT = 3;
-    oldPins.forEach(function(oldPin) {
+    oldPins.forEach(function (oldPin) {
       oldPin.remove();
     });
     window.card.hide();
@@ -59,7 +58,6 @@
       newPin.style.left = apartment.location.x + 'px';
       newPin.style.top = apartment.location.y + 'px';
       newPin.setAttribute('data-pin', i.toString());
-      /*lodgeData[i] = apartment;*/
       return newPin;
     };
 

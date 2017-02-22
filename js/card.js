@@ -133,5 +133,5 @@
   window.card = {
     show: showCard,
     hide: hideCard
-  }
+  };
 })();
