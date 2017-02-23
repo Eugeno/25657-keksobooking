@@ -42,10 +42,9 @@
     );
   };
 
-  var updatePins = function (oldPins, pinsContainer) {
+  var updatePins = function (oldPins, pinsContainer, maxPins) {
     var filterData = getFilters();
     var pins = [];
-    var MAX_PINS_COUNT = 3;
     oldPins.forEach(function (oldPin) {
       oldPin.remove();
     });
@@ -67,7 +66,7 @@
         var newPin = createPinElement(apartment, i);
         pins.push(newPin);
       }
-      if (pins.length === MAX_PINS_COUNT) {
+      if (pins.length === maxPins) {
         break;
       }
     }
@@ -125,8 +124,9 @@
     };
 
     var onLoad = function (data) {
+      var MAX_PINS_COUNT = 3;
       similarApartments = JSON.parse(data);
-      pins = updatePins(pins, pinMap);
+      pins = updatePins(pins, pinMap, MAX_PINS_COUNT);
     };
 
     formFilter.addEventListener('change', function () {
