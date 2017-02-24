@@ -10,9 +10,9 @@
 
   var dialogClose;
 
-  var getOfferTypeText = function (type) {
+  var getOfferTypeText = function (lodgeType) {
     var retVal = '';
-    switch (type) {
+    switch (lodgeType) {
       case 'flat':
         retVal = 'Квартира';
         break;
@@ -29,14 +29,20 @@
     var roomsText = '';
     var guestsText = '';
 
-    if (rooms === 0) {
-      roomsText = 'Нет комнат';
-    } else if (rooms % 10 === 1) {
-      roomsText = rooms + ' комната';
-    } else if (rooms % 10 === 2 || rooms % 10 === 3 || rooms % 10 === 4) {
-      roomsText = rooms + ' комнаты';
-    } else {
-      roomsText = rooms + ' комнат';
+    switch (rooms % 10) {
+      case 0:
+        roomsText = 'Нет комнат';
+        break;
+      case 1:
+        roomsText = rooms + ' комната';
+        break;
+      case 2:
+      case 3:
+      case 4:
+        roomsText = rooms + ' комнаты';
+        break;
+      default:
+        roomsText = rooms + ' комнат';
     }
 
     if (guests === 0) {
@@ -51,6 +57,9 @@
   };
 
   var removeOldDialog = function () {
+    /* ПОЯСНЕНИЕ ДЛЯ ПРОВЕРЯЮЩЕГО
+    я не могу найти элемент и сохранить его в переменную на уровне модуля,
+    поскольку этот элемент каждый раз разный, и его нужно искать заново */
     var oldDialog = document.querySelector('.dialog');
     if (oldDialog) {
       oldDialog.remove();
@@ -105,9 +114,9 @@
     }
   };
 
-  var onKeyDown = function (e) {
+  var onKeyDown = function (closeHandler, e) {
     if ((e.target === dialogClose && e.keyCode === ENTER_KEY_CODE) || e.keyCode === ESCAPE_KEY_CODE) {
-      hideCard();
+      hideCard(closeHandler);
     }
   };
 
@@ -117,17 +126,23 @@
     dialogClose = dialog.querySelector('.dialog__close');
     fillDialog(dialog, lodgeData);
     tokyoMap.appendChild(dialog);
-    dialogClose.addEventListener('click', hideCard);
-    window.addEventListener('keydown', onKeyDown);
-    closeHandler();
+    dialogClose.addEventListener('click', function () {
+      hideCard(closeHandler);
+    });
+    window.addEventListener('keydown', function (e) {
+      onKeyDown(closeHandler, e);
+    });
   };
 
-  var hideCard = function () {
+  var hideCard = function (closeHandler) {
     if (dialogClose) {
       dialogClose.removeEventListener('click', hideCard);
     }
     window.removeEventListener('keydown', onKeyDown);
     removeOldDialog();
+    if (closeHandler) {
+      closeHandler();
+    }
   };
 
   window.card = {

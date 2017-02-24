@@ -93,8 +93,8 @@
 
     var showLodgeInfo = function (clickedPin, curLodgeData) {
       deactivatePins(pins);
-      activatePin(clickedPin);
       window.card.show(hideLodgeInfo, curLodgeData);
+      activatePin(clickedPin);
     };
 
     var hideLodgeInfo = function () {
@@ -107,12 +107,14 @@
 
     var pinClickHandler = function (e) {
       var clickedPin;
-      if (e.target.hasAttribute('data-pin')) {
-        clickedPin = e.target;
-      } else if (e.target.parentNode.hasAttribute('data-pin')) {
-        clickedPin = e.target.parentNode;
+      if (!e.target.classList.contains('pin__main') && !e.target.parentNode.classList.contains('pin__main')) {
+        if (e.target.hasAttribute('data-pin')) {
+          clickedPin = e.target;
+        } else if (e.target.parentNode.hasAttribute('data-pin')) {
+          clickedPin = e.target.parentNode;
+        }
+        showLodgeInfo(clickedPin, similarApartments[clickedPin.getAttribute('data-pin')]);
       }
-      showLodgeInfo(clickedPin, similarApartments[clickedPin.getAttribute('data-pin')]);
     };
 
     var pinKeydownHandler = function (e) {
