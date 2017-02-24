@@ -63,17 +63,17 @@
     }
   };
 
-  var fillDialog = function (dialog, lodgeData) {
-    var dialogTitle = dialog.querySelector('.dialog__title');
-    var lodgeTitle = dialog.querySelector('.lodge__title');
-    var lodgeAddress = dialog.querySelector('.lodge__address');
-    var lodgePrice = dialog.querySelector('.lodge__price');
-    var lodgeType = dialog.querySelector('.lodge__type');
-    var lodgeRG = dialog.querySelector('.lodge__rooms-and-guests');
-    var lodgeCTime = dialog.querySelector('.lodge__checkin-time');
-    var lodgeDescription = dialog.querySelector('.lodge__description');
-    var lodgeFeatures = dialog.querySelector('.lodge__features');
-    var lodgePhotos = dialog.querySelector('.lodge__photos');
+  var fillDialog = function (newDialog, lodgeData) {
+    var dialogTitle = newDialog.querySelector('.dialog__title');
+    var lodgeTitle = newDialog.querySelector('.lodge__title');
+    var lodgeAddress = newDialog.querySelector('.lodge__address');
+    var lodgePrice = newDialog.querySelector('.lodge__price');
+    var lodgeType = newDialog.querySelector('.lodge__type');
+    var lodgeRG = newDialog.querySelector('.lodge__rooms-and-guests');
+    var lodgeCTime = newDialog.querySelector('.lodge__checkin-time');
+    var lodgeDescription = newDialog.querySelector('.lodge__description');
+    var lodgeFeatures = newDialog.querySelector('.lodge__features');
+    var lodgePhotos = newDialog.querySelector('.lodge__photos');
     var i;
 
     var dialogTitleImage = document.createElement('img');
