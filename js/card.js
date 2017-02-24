@@ -57,9 +57,9 @@
     return roomsText + ' ' + guestsText;
   };
 
-  var removeOldDialog = function (dialog) {
-    if (dialog) {
-      dialog.remove();
+  var removeOldDialog = function (oldDialog) {
+    if (oldDialog) {
+      oldDialog.remove();
     }
   };
 
