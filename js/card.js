@@ -114,24 +114,22 @@
     }
   };
 
-  var onKeyDown = function (closeHandler, e) {
+  var onKeyDown = function (e) {
     if ((e.target === dialogClose && e.keyCode === ENTER_KEY_CODE) || e.keyCode === ESCAPE_KEY_CODE) {
-      hideCard(closeHandler);
+      hideCard();
     }
   };
 
-  var showCard = function (closeHandler, lodgeData) {
+  var closeHandler;
+  var showCard = function (closeCallback, lodgeData) {
+    closeHandler = closeCallback;
     removeOldDialog();
     var dialog = dialogToClone.cloneNode(true);
     dialogClose = dialog.querySelector('.dialog__close');
     fillDialog(dialog, lodgeData);
     tokyoMap.appendChild(dialog);
-    dialogClose.addEventListener('click', function () {
-      hideCard(closeHandler);
-    });
-    window.addEventListener('keydown', function (e) {
-      onKeyDown(closeHandler, e);
-    });
+    dialogClose.addEventListener('click', hideCard);
+    window.addEventListener('keydown', onKeyDown);
   };
 
   var hideCard = function (closeHandler) {
