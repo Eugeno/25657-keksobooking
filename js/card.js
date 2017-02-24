@@ -132,7 +132,7 @@
     window.addEventListener('keydown', onKeyDown);
   };
 
-  var hideCard = function (closeHandler) {
+  var hideCard = function () {
     if (dialogClose) {
       dialogClose.removeEventListener('click', hideCard);
     }
