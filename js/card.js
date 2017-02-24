@@ -8,6 +8,7 @@
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
 
+  var dialog;
   var dialogClose;
 
   var getOfferTypeText = function (lodgeType) {
@@ -56,13 +57,9 @@
     return roomsText + ' ' + guestsText;
   };
 
-  var removeOldDialog = function () {
-    /* ПОЯСНЕНИЕ ДЛЯ ПРОВЕРЯЮЩЕГО
-    я не могу найти элемент и сохранить его в переменную на уровне модуля,
-    поскольку этот элемент каждый раз разный, и его нужно искать заново */
-    var oldDialog = document.querySelector('.dialog');
-    if (oldDialog) {
-      oldDialog.remove();
+  var removeOldDialog = function (dialog) {
+    if (dialog) {
+      dialog.remove();
     }
   };
 
@@ -123,8 +120,8 @@
   var closeHandler;
   var showCard = function (closeCallback, lodgeData) {
     closeHandler = closeCallback;
-    removeOldDialog();
-    var dialog = dialogToClone.cloneNode(true);
+    removeOldDialog(dialog);
+    dialog = dialogToClone.cloneNode(true);
     dialogClose = dialog.querySelector('.dialog__close');
     fillDialog(dialog, lodgeData);
     tokyoMap.appendChild(dialog);
@@ -137,7 +134,7 @@
       dialogClose.removeEventListener('click', hideCard);
     }
     window.removeEventListener('keydown', onKeyDown);
-    removeOldDialog();
+    removeOldDialog(dialog);
     if (closeHandler) {
       closeHandler();
     }
