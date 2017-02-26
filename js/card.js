@@ -10,6 +10,7 @@
 
   var dialog;
   var dialogClose;
+  var dialogHandler;
 
   var getOfferTypeText = function (lodgeType) {
     var retVal = '';
@@ -127,6 +128,72 @@
     tokyoMap.appendChild(dialog);
     dialogClose.addEventListener('click', hideCard);
     window.addEventListener('keydown', onKeyDown);
+
+    dialogHandler = dialog.querySelector('.dialog__title img');
+
+    var startPoint;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startPoint.x - moveEvt.clientX,
+        y: startPoint.y - moveEvt.clientY
+      };
+
+      if (dialog.offsetTop - shift.y < 0) {
+        dialog.style.top = 0;
+      } else if (tokyoMap.offsetHeight - (dialog.offsetTop + dialog.offsetHeight - shift.y) < 0) {
+        dialog.style.top = tokyoMap.offsetHeight - dialog.offsetHeight + 'px';
+      } else {
+        dialog.style.top = (dialog.offsetTop - shift.y) + 'px';
+      }
+
+      console.log(tokyoMap.offsetLeft);
+      console.log(tokyoMap.offsetWidth);
+
+      if (dialog.offsetLeft - shift.x < 0) {
+        dialog.style.left = 0;
+      } else if (tokyoMap.offsetWidth - (dialog.offsetLeft + dialog.offsetWidth - shift.x) < 0) {
+        dialog.style.left = tokyoMap.offsetWidth - dialog.offsetWidth + 'px';
+      } else {
+        dialog.style.left = (dialog.offsetLeft - shift.x) + 'px';
+      }
+
+      startPoint = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+    };
+
+    var isDragging = false;
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      isDragging = false;
+    };
+
+    dialogHandler.addEventListener('mousedown', function (evt) {
+      evt.preventDefault();
+
+      if (isDragging) {
+        onMouseUp();
+      }
+
+      isDragging = true;
+
+      startPoint = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
   };
 
   var hideCard = function () {
