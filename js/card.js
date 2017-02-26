@@ -191,7 +191,9 @@
     if (closeHandler) {
       closeHandler();
     }
-    dialogHandler.removeEventListener('mousedown', dragDialogHandler);
+    if (dialogHandler) {
+      dialogHandler.removeEventListener('mousedown', dragDialogHandler);
+    }
   };
 
   window.card = {

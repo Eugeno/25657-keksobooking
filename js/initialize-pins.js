@@ -5,6 +5,60 @@
   var similarApartments = [];
   var pinTemplate = document.querySelector('#pin-template');
   var pinToClone = pinTemplate.content.querySelector('.pin');
+  var tokyoMap = document.querySelector('.tokyo');
+  var pinMain;
+  var addressInput = document.querySelector('#address');
+
+  var startPoint;
+  var onMouseMove = function (moveEvt) {
+    pinMain = moveEvt.target;
+    moveEvt.preventDefault();
+    var shift = {
+      x: startPoint.x - moveEvt.clientX,
+      y: startPoint.y - moveEvt.clientY
+    };
+    if (pinMain.offsetTop - shift.y < 0) {
+      pinMain.style.top = 0;
+    } else if (tokyoMap.offsetHeight - (pinMain.offsetTop + pinMain.offsetHeight - shift.y) < 0) {
+      pinMain.style.top = tokyoMap.offsetHeight - pinMain.offsetHeight + 'px';
+    } else {
+      pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
+    }
+    if (pinMain.offsetLeft - shift.x < 0) {
+      pinMain.style.left = 0;
+    } else if (tokyoMap.offsetWidth - (pinMain.offsetLeft + pinMain.offsetWidth - shift.x) < 0) {
+      pinMain.style.left = tokyoMap.offsetWidth - pinMain.offsetWidth + 'px';
+    } else {
+      pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+    }
+    startPoint = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+    addressInput.value = 'x: ' + (startPoint.x + parseInt(pinMain.offsetWidth / 2, 10)) + ', y: ' + (startPoint.y + pinMain.offsetHeight);
+  };
+
+  var isDragging = false;
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    isDragging = false;
+  };
+
+  var dragPinHandler = function (evt) {
+    evt.preventDefault();
+    if (isDragging) {
+      onMouseUp();
+    }
+    isDragging = true;
+    startPoint = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
 
   var getFilters = function () {
     return {
@@ -78,6 +132,8 @@
     var pins = [];
     var savedPin;
     var PIN_DARA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
+    pinMain = pinMap.querySelector('.pin__main');
+    pinMain.addEventListener('mousedown', dragPinHandler);
 
     var activatePin = function (clickedPin) {
       clickedPin.classList.add('pin--active');
