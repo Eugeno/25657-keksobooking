@@ -6,12 +6,11 @@
   var pinTemplate = document.querySelector('#pin-template');
   var pinToClone = pinTemplate.content.querySelector('.pin');
   var tokyoMap = document.querySelector('.tokyo');
-  var pinMain;
+  var pinMain = tokyoMap.querySelector('.pin__main');
   var addressInput = document.querySelector('#address');
 
   var startPoint;
   var onMouseMove = function (moveEvt) {
-    pinMain = moveEvt.target;
     moveEvt.preventDefault();
     var shift = {
       x: startPoint.x - moveEvt.clientX,
@@ -132,7 +131,6 @@
     var pins = [];
     var savedPin;
     var PIN_DARA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
-    pinMain = pinMap.querySelector('.pin__main');
     pinMain.addEventListener('mousedown', dragPinHandler);
 
     var activatePin = function (clickedPin) {
