@@ -120,55 +120,6 @@
 
   var closeHandler;
 
-  var startPoint;
-  var onMouseMove = function (moveEvt) {
-    moveEvt.preventDefault();
-    var shift = {
-      x: startPoint.x - moveEvt.clientX,
-      y: startPoint.y - moveEvt.clientY
-    };
-    if (dialog.offsetTop - shift.y < 0) {
-      dialog.style.top = 0;
-    } else if (tokyoMap.offsetHeight - (dialog.offsetTop + dialog.offsetHeight - shift.y) < 0) {
-      dialog.style.top = tokyoMap.offsetHeight - dialog.offsetHeight + 'px';
-    } else {
-      dialog.style.top = (dialog.offsetTop - shift.y) + 'px';
-    }
-    if (dialog.offsetLeft - shift.x < 0) {
-      dialog.style.left = 0;
-    } else if (tokyoMap.offsetWidth - (dialog.offsetLeft + dialog.offsetWidth - shift.x) < 0) {
-      dialog.style.left = tokyoMap.offsetWidth - dialog.offsetWidth + 'px';
-    } else {
-      dialog.style.left = (dialog.offsetLeft - shift.x) + 'px';
-    }
-    startPoint = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
-    };
-  };
-
-  var isDragging = false;
-  var onMouseUp = function (upEvt) {
-    upEvt.preventDefault();
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-    isDragging = false;
-  };
-
-  var dragDialogHandler = function (evt) {
-    evt.preventDefault();
-    if (isDragging) {
-      onMouseUp();
-    }
-    isDragging = true;
-    startPoint = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  };
-
   var showCard = function (closeCallback, lodgeData) {
     closeHandler = closeCallback;
     removeOldDialog(dialog);
@@ -178,8 +129,9 @@
     tokyoMap.appendChild(dialog);
     dialogClose.addEventListener('click', hideCard);
     window.addEventListener('keydown', onKeyDown);
+
     dialogHandler = dialog.querySelector('.dialog__title img');
-    dialogHandler.addEventListener('mousedown', dragDialogHandler);
+    window.dragAndDrop.start(dialog, dialogHandler, tokyoMap);
   };
 
   var hideCard = function () {
@@ -192,7 +144,7 @@
       closeHandler();
     }
     if (dialogHandler) {
-      dialogHandler.removeEventListener('mousedown', dragDialogHandler);
+      window.dragAndDrop.stop(dialogHandler);
     }
   };
 

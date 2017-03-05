@@ -609,6 +609,10 @@ select option:hover {
     background-image: url('../img/main-pin.png');
 }
 
+.pin__main * {
+    pointer-events: none;
+}
+
 .pin__main img {
     margin-top: 15px;
     margin-left: 17px;
