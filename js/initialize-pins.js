@@ -82,8 +82,8 @@
     var savedPin;
     var PIN_DARA_URL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data';
     var updateAddress = function () {
-      addressInput.value = 'x: ' + (parseInt(pinMain.style.left.substring(0, pinMain.style.left.length - 2)) + parseInt(pinMain.offsetWidth / 2, 10)) +
-        ', ' + 'y: ' + (parseInt(pinMain.style.top.substring(0, pinMain.style.top.length - 2)) + pinMain.offsetHeight);
+      addressInput.value = 'x: ' + (parseInt(pinMain.style.left.substring(0, pinMain.style.left.length - 2), 10) + parseInt(pinMain.offsetWidth / 2, 10)) +
+        ', ' + 'y: ' + (parseInt(pinMain.style.top.substring(0, pinMain.style.top.length - 2), 10) + pinMain.offsetHeight);
     };
     window.dragAndDrop.start(pinMain, pinMain, tokyoMap, updateAddress);
 

@@ -44,7 +44,9 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      updateCallback();
+      if (updateCallback) {
+        updateCallback();
+      }
     };
 
     var isDragging = false;
